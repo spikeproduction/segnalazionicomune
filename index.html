@@ -3,799 +3,509 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Città Segnala — San Giovanni Rotondo</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>Il Comune che risponde — Modello dimostrativo</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-
 :root{
-  --bg:#F5F4F1;
-  --surface:#FFFFFF;
-  --surface2:#FAFAF9;
-  --border:#E8E7E3;
-  --border2:#D4D2CC;
-  --text:#0D0D0C;
-  --text2:#6B6860;
-  --text3:#A8A69F;
-  --accent:#1C3557;
-  --accent-bg:#EBF0F6;
-  --green:#1A6644;
-  --green-bg:#E8F4EE;
-  --amber:#7A4200;
-  --amber-bg:#FDF3E7;
-  --red:#8B1F1F;
-  --red-bg:#FDECEA;
-  --blue:#1A4D8A;
-  --blue-bg:#EBF2FB;
-  --r:14px;
-  --r-sm:8px;
-  --r-pill:100px;
+  --navy:#1C3557; --blue:#3A7CB0; --blue-soft:#E8F0F7; --bg:#F2F5F8;
+  --ink:#22303F; --muted:#5A6470; --line:#D8E0E8; --white:#FFFFFF;
+  --st-ricevuta:#B97A14; --st-ricevuta-bg:#FBF3E2;
+  --st-assegnata:#3A7CB0; --st-assegnata-bg:#E8F0F7;
+  --st-lavorazione:#5F51A8; --st-lavorazione-bg:#EDEAF8;
+  --st-risolta:#2E7D52; --st-risolta-bg:#E5F3EC;
+  --st-altroente:#5A6470; --st-altroente-bg:#EDF0F3;
+  --st-norealizz:#A33B3B; --st-norealizz-bg:#F9E9E9;
+  --r:10px;
 }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55}
+.cond{font-family:'Barlow Condensed',sans-serif}
 
-body{font-family:'Geist',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;min-height:100vh}
+/* ---------- shell ---------- */
+header{background:var(--navy);color:#fff;padding:0 20px}
+.topbar{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:16px;height:62px}
+.logo{font-family:'Barlow Condensed';font-weight:700;font-size:24px;letter-spacing:.5px;text-transform:uppercase}
+.logo small{display:block;font-family:'Barlow';font-weight:400;font-size:11px;letter-spacing:.3px;color:#B9CCDD;text-transform:none}
+nav{margin-left:auto;display:flex;gap:6px}
+nav button{font-family:'Barlow Condensed';font-weight:600;font-size:16px;letter-spacing:.4px;text-transform:uppercase;background:transparent;border:none;color:#B9CCDD;padding:9px 14px;border-radius:8px;cursor:pointer}
+nav button.active{background:var(--blue);color:#fff}
+nav button:hover{color:#fff}
+.demo-strip{background:var(--blue);color:#fff;text-align:center;font-size:12.5px;padding:5px 10px}
+main{max-width:1100px;margin:0 auto;padding:26px 20px 60px}
+.view{display:none}.view.active{display:block}
+h1{font-family:'Barlow Condensed';font-weight:700;font-size:32px;color:var(--navy);line-height:1.1}
+.sub{color:var(--muted);margin:4px 0 22px;font-size:14.5px}
+h2{font-family:'Barlow Condensed';font-weight:600;font-size:21px;color:var(--blue);margin:26px 0 10px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:22px}
 
-/* ── TOPBAR ── */
-.topbar{
-  background:var(--surface);
-  border-bottom:1px solid var(--border);
-  height:56px;
-  display:flex;
-  align-items:center;
-  padding:0 20px;
-  gap:16px;
-  position:sticky;
-  top:0;
-  z-index:50;
-}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-mark{
-  width:32px;height:32px;
-  background:var(--accent);
-  border-radius:var(--r-sm);
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;
-}
-.logo-mark svg{width:16px;height:16px;fill:white}
-.logo-text{font-size:15px;font-weight:600;color:var(--text);letter-spacing:-.01em}
-.logo-city{font-size:11px;color:var(--text3);font-weight:400;letter-spacing:.03em}
-.topbar-spacer{flex:1}
-.topbar-btn{
-  height:34px;padding:0 14px;
-  background:var(--accent);color:white;
-  border:none;border-radius:var(--r-sm);
-  font:500 13px/1 'Geist',sans-serif;
-  cursor:pointer;display:flex;align-items:center;gap:6px;
-  transition:opacity .15s;
-}
-.topbar-btn:hover{opacity:.85}
-.topbar-btn svg{width:14px;height:14px;fill:white}
+/* ---------- form cittadino ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.grid2{grid-template-columns:1fr}}
+label{display:block;font-weight:600;font-size:13px;margin-bottom:5px;color:var(--navy)}
+label .opt{font-weight:400;color:var(--muted)}
+input,select,textarea{width:100%;font-family:'Barlow';font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue)}
+textarea{min-height:96px;resize:vertical}
+.field{margin-bottom:14px}
+.btn{font-family:'Barlow Condensed';font-weight:700;font-size:17px;letter-spacing:.5px;text-transform:uppercase;background:var(--navy);color:#fff;border:none;border-radius:8px;padding:12px 26px;cursor:pointer}
+.btn:hover{background:#27466e}
+.btn.sec{background:var(--blue-soft);color:var(--navy)}
+.btn.sec:hover{background:#dbe8f3}
+.btn.sm{font-size:14px;padding:8px 16px}
+.hint{font-size:12.5px;color:var(--muted);margin-top:4px}
 
-/* ── NAV ── */
-.nav{
-  background:var(--surface);
-  border-bottom:1px solid var(--border);
-  display:flex;
-  padding:0 20px;
-  overflow-x:auto;
-  gap:2px;
-}
-.nav::-webkit-scrollbar{display:none}
-.nav-item{
-  padding:0 14px;height:44px;
-  display:flex;align-items:center;gap:7px;
-  font:500 13px/1 'Geist',sans-serif;
-  color:var(--text2);
-  cursor:pointer;border:none;background:none;
-  border-bottom:2px solid transparent;
-  margin-bottom:-1px;
-  white-space:nowrap;
-  transition:color .15s;
-}
-.nav-item svg{width:15px;height:15px;flex-shrink:0}
-.nav-item:hover{color:var(--text)}
-.nav-item.on{color:var(--text);border-bottom-color:var(--text)}
-.nav-count{
-  font-size:11px;font-weight:500;
-  background:var(--bg);color:var(--text2);
-  padding:2px 7px;border-radius:var(--r-pill);
-}
+/* ticket conferma */
+.ticket{display:none;border:1.5px dashed var(--blue);border-radius:var(--r);background:var(--blue-soft);padding:22px;margin-top:18px;text-align:center}
+.ticket .tid{font-family:'Barlow Condensed';font-weight:700;font-size:34px;color:var(--navy);letter-spacing:1px}
+.ticket p{font-size:14px;color:var(--ink);max-width:520px;margin:8px auto 0}
 
-/* ── LAYOUT ── */
-.page{display:none;padding:24px 20px;max-width:1040px;margin:0 auto}
-.page.on{display:block}
+/* verifica stato */
+.lookup{display:flex;gap:10px;flex-wrap:wrap}
+.lookup input{flex:1;min-width:200px}
+.timeline{margin-top:16px;display:none}
+.tl-item{display:flex;gap:12px;padding:10px 0;border-left:2px solid var(--line);margin-left:8px;padding-left:18px;position:relative}
+.tl-item::before{content:'';width:10px;height:10px;border-radius:50%;background:var(--blue);position:absolute;left:-6px;top:16px}
+.tl-item .tl-date{font-size:12.5px;color:var(--muted);min-width:86px;padding-top:2px}
+.tl-item .tl-body b{font-size:14px;color:var(--navy)}
+.tl-item .tl-body div{font-size:13.5px;color:var(--muted)}
 
-/* ── GRID STATS ── */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
-.stat{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--r);
-  padding:18px 20px;
-}
-.stat-val{font-size:32px;font-weight:600;letter-spacing:-.03em;line-height:1;margin-bottom:4px}
-.stat-label{font-size:12px;color:var(--text3);font-weight:400}
-.stat-sub{font-size:11px;margin-top:6px;font-weight:500}
+/* ---------- dashboard ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:18px}
+.stat{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.stat .n{font-family:'Barlow Condensed';font-weight:700;font-size:34px;color:var(--navy);line-height:1}
+.stat .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+.stat.warn .n{color:var(--st-norealizz)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.filters select{width:auto;min-width:160px}
+table{width:100%;border-collapse:collapse;background:var(--white);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+thead th{font-family:'Barlow Condensed';font-weight:600;font-size:14px;letter-spacing:.4px;text-transform:uppercase;text-align:left;color:var(--muted);background:#F7F9FB;padding:10px 12px;border-bottom:1px solid var(--line)}
+tbody td{padding:11px 12px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--blue-soft)}
+tbody tr:last-child td{border-bottom:none}
+.badge{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;white-space:nowrap}
+.b-ricevuta{background:var(--st-ricevuta-bg);color:var(--st-ricevuta)}
+.b-assegnata{background:var(--st-assegnata-bg);color:var(--st-assegnata)}
+.b-lavorazione{background:var(--st-lavorazione-bg);color:var(--st-lavorazione)}
+.b-risolta{background:var(--st-risolta-bg);color:var(--st-risolta)}
+.b-altroente{background:var(--st-altroente-bg);color:var(--st-altroente)}
+.b-norealizz{background:var(--st-norealizz-bg);color:var(--st-norealizz)}
+.giorni-warn{color:var(--st-norealizz);font-weight:600}
+.tbl-wrap{overflow-x:auto;border-radius:var(--r)}
 
-/* ── PANELS ── */
-.row2{display:grid;grid-template-columns:1fr 260px;gap:12px;margin-bottom:12px}
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
-.panel-head{
-  padding:14px 18px;
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid var(--border);
-}
-.panel-title{font-size:13px;font-weight:500;color:var(--text)}
-.panel-link{font-size:12px;color:var(--text2);cursor:pointer;text-decoration:none;background:none;border:none;font-family:inherit}
-.panel-link:hover{color:var(--text)}
-.panel-body{padding:16px 18px}
+/* dettaglio pratica */
+.overlay{display:none;position:fixed;inset:0;background:rgba(28,53,87,.45);z-index:50}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(480px,100%);background:#fff;z-index:60;transform:translateX(105%);transition:transform .25s ease;display:flex;flex-direction:column;box-shadow:-6px 0 24px rgba(0,0,0,.12)}
+.drawer.open{transform:translateX(0)}
+.drawer-head{background:var(--navy);color:#fff;padding:18px 22px}
+.drawer-head .tid{font-family:'Barlow Condensed';font-weight:700;font-size:24px}
+.drawer-head .close{float:right;background:transparent;border:none;color:#B9CCDD;font-size:22px;cursor:pointer;line-height:1}
+.drawer-body{padding:20px 22px;overflow-y:auto;flex:1}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:4px 12px;font-size:14px;margin-bottom:16px}
+.kv dt{color:var(--muted)}.kv dd{font-weight:500}
+.drawer-body h3{font-family:'Barlow Condensed';font-weight:600;font-size:17px;color:var(--blue);margin:18px 0 8px}
+.note-req{display:none;margin-top:10px}
 
-/* ── BAR CHART ── */
-.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
-.bar-row:last-child{margin-bottom:0}
-.bar-cat{width:120px;font-size:12px;color:var(--text2);flex-shrink:0}
-.bar-track{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
-.bar-fill{height:100%;border-radius:2px;transition:width .6s cubic-bezier(.4,0,.2,1)}
-.bar-n{width:24px;text-align:right;font-size:12px;font-weight:500;color:var(--text)}
-
-/* ── DONUT ── */
-.donut-center{text-align:center;padding:8px 0 12px}
-.donut-pct{font-size:28px;font-weight:600;letter-spacing:-.03em;color:var(--green)}
-.donut-sub{font-size:11px;color:var(--text3)}
-.legend{margin-top:10px;display:flex;flex-direction:column;gap:6px}
-.legend-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2)}
-.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.legend-n{margin-left:auto;font-weight:500;color:var(--text)}
-
-/* ── RECENTS ── */
-.recent-item{
-  display:flex;align-items:center;gap:12px;
-  padding:12px 0;
-  border-bottom:1px solid var(--border);
-}
-.recent-item:last-child{border-bottom:none}
-.ri-body{flex:1;min-width:0}
-.ri-title{font-size:13px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ri-meta{font-size:11px;color:var(--text3);margin-top:2px}
-
-/* ── CHIPS ── */
-.chip{
-  display:inline-flex;align-items:center;
-  padding:3px 9px;border-radius:var(--r-pill);
-  font-size:11px;font-weight:500;white-space:nowrap;flex-shrink:0;
-}
-.chip-strada{background:#F0EEFF;color:#4B2EAA}
-.chip-luce  {background:var(--amber-bg);color:var(--amber)}
-.chip-verde {background:var(--green-bg);color:var(--green)}
-.chip-rif   {background:var(--red-bg);color:var(--red)}
-.chip-soc   {background:#FDF4FF;color:#7E2F8E}
-.chip-sic   {background:var(--blue-bg);color:var(--blue)}
-.chip-altro {background:var(--bg);color:var(--text2)}
-.st-new     {background:var(--blue-bg);color:var(--blue)}
-.st-wip     {background:var(--amber-bg);color:var(--amber)}
-.st-done    {background:var(--green-bg);color:var(--green)}
-
-/* ── LISTA ── */
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.filter{
-  height:30px;padding:0 12px;
-  border-radius:var(--r-pill);
-  border:1px solid var(--border2);
-  background:var(--surface);
-  color:var(--text2);
-  font:500 12px/1 'Geist',sans-serif;
-  cursor:pointer;transition:all .15s;
-}
-.filter:hover{border-color:var(--text2);color:var(--text)}
-.filter.on{background:var(--text);color:var(--surface);border-color:var(--text)}
-
-.item-list{display:flex;flex-direction:column;gap:8px}
-.item{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--r);
-  padding:14px 18px;
-  display:flex;align-items:center;gap:12px;
-  cursor:pointer;
-  transition:border-color .15s,box-shadow .15s;
-}
-.item:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.item-body{flex:1;min-width:0}
-.item-title{font-size:14px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
-.item-meta{font-size:12px;color:var(--text3)}
-.item-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}
-.item-code{font-size:11px;color:var(--text3);font-family:monospace}
-
-/* ── FORM ── */
-.form-shell{max-width:600px;margin:0 auto}
-.form-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
-.form-top{
-  padding:24px 28px 20px;
-  border-bottom:1px solid var(--border);
-}
-.form-top h2{font-size:20px;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
-.form-top p{font-size:13px;color:var(--text2)}
-.form-inner{padding:24px 28px}
-.field{margin-bottom:18px}
-.field:last-of-type{margin-bottom:0}
-.label{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:6px;display:flex;align-items:center;gap:4px}
-.label-opt{font-weight:400;color:var(--text3)}
-input[type=text],input[type=email],textarea,select{
-  width:100%;
-  padding:10px 14px;
-  border:1px solid var(--border2);
-  border-radius:var(--r-sm);
-  font:400 14px/1.5 'Geist',sans-serif;
-  color:var(--text);
-  background:var(--surface);
-  outline:none;
-  transition:border-color .15s,box-shadow .15s;
-}
-input[type=text]:focus,input[type=email]:focus,textarea:focus,select:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(28,53,87,.1);
-}
-textarea{resize:vertical;min-height:80px}
-.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.cat-card{
-  padding:12px 8px;text-align:center;
-  border:1px solid var(--border);border-radius:var(--r-sm);
-  cursor:pointer;transition:all .15s;background:var(--surface);
-}
-.cat-card:hover{border-color:var(--border2)}
-.cat-card.on{border-color:var(--accent);background:var(--accent-bg)}
-.cat-emoji{font-size:22px;display:block;margin-bottom:5px}
-.cat-name{font-size:11px;font-weight:500;color:var(--text2)}
-.cat-card.on .cat-name{color:var(--accent)}
-
-.map-mock{
-  border:1px solid var(--border);border-radius:var(--r-sm);
-  background:var(--bg);
-  height:130px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:6px;cursor:pointer;transition:border-color .15s;
-  color:var(--text2);font-size:13px;
-}
-.map-mock:hover{border-color:var(--border2)}
-.map-mock svg{width:24px;height:24px;opacity:.5}
-
-.upload-mock{
-  border:1px dashed var(--border2);border-radius:var(--r-sm);
-  padding:14px;text-align:center;
-  cursor:pointer;color:var(--text3);font-size:12px;
-  transition:border-color .15s;
-}
-.upload-mock:hover{border-color:var(--text2);color:var(--text2)}
-
-.row2-field{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-
-.submit-btn{
-  width:100%;margin-top:20px;
-  height:44px;
-  background:var(--accent);color:white;
-  border:none;border-radius:var(--r-sm);
-  font:500 14px/1 'Geist',sans-serif;
-  cursor:pointer;
-  transition:opacity .15s;
-}
-.submit-btn:hover{opacity:.85}
-.privacy{font-size:11px;color:var(--text3);text-align:center;margin-top:10px}
-
-/* success */
-.success{display:none;padding:40px 28px;text-align:center}
-.success.on{display:block}
-.s-icon{
-  width:56px;height:56px;border-radius:50%;
-  background:var(--green-bg);
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 16px;
-}
-.s-icon svg{width:26px;height:26px;fill:var(--green)}
-.s-code{font-size:26px;font-weight:600;letter-spacing:-.02em;color:var(--text);font-family:monospace;margin:8px 0 4px}
-.s-hint{font-size:13px;color:var(--text2);margin-bottom:20px}
-.note-box{
-  background:var(--accent-bg);border-radius:var(--r-sm);
-  padding:12px 14px;font-size:13px;color:var(--accent);
-  text-align:left;margin-bottom:20px;line-height:1.55;
-}
-.reset-btn{
-  height:38px;padding:0 20px;
-  border:1px solid var(--border2);border-radius:var(--r-sm);
-  background:var(--surface);color:var(--text);
-  font:500 13px/1 'Geist',sans-serif;cursor:pointer;
-}
-
-/* ── STATO ── */
-.stato-shell{max-width:560px;margin:0 auto}
-.search-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--r);padding:24px 28px;margin-bottom:14px;
-}
-.search-card h2{font-size:18px;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
-.search-card p{font-size:13px;color:var(--text2);margin-bottom:16px}
-.search-row{display:flex;gap:8px}
-.search-row input{flex:1}
-.search-go{
-  height:40px;padding:0 18px;
-  background:var(--accent);color:white;border:none;
-  border-radius:var(--r-sm);font:500 13px/1 'Geist',sans-serif;cursor:pointer;
-  white-space:nowrap;transition:opacity .15s;flex-shrink:0;
-}
-.search-go:hover{opacity:.85}
-
-.tracker{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
-.tracker.on{display:block}
-.tracker-head{padding:20px 24px;border-bottom:1px solid var(--border)}
-.tracker-top-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.tracker-id{font-size:12px;font-family:monospace;color:var(--text2)}
-.tracker-desc{font-size:15px;font-weight:500;color:var(--text);margin-bottom:4px}
-.tracker-meta-txt{font-size:12px;color:var(--text3)}
-.tracker-body{padding:24px}
-
-/* steps */
-.steps{display:flex;align-items:flex-start;position:relative;margin-bottom:24px}
-.step{flex:1;text-align:center;position:relative;z-index:1}
-.step-dot{
-  width:28px;height:28px;border-radius:50%;
-  border:1.5px solid var(--border2);background:var(--surface);
-  margin:0 auto 8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:600;color:var(--text3);
-  position:relative;z-index:2;
-  transition:all .3s;
-}
-.step-dot.done{background:var(--green);border-color:var(--green);color:white}
-.step-dot.active{background:var(--accent);border-color:var(--accent);color:white}
-.step-lbl{font-size:11px;color:var(--text3)}
-.step-lbl.done{color:var(--green);font-weight:500}
-.step-lbl.active{color:var(--accent);font-weight:500}
-.steps-bg{
-  position:absolute;top:14px;left:12.5%;width:75%;
-  height:1.5px;background:var(--border);z-index:0;
-}
-.steps-bg-fill{height:100%;background:var(--green);width:50%;transition:width .5s}
-
-.update-note{
-  background:var(--accent-bg);border-radius:var(--r-sm);
-  padding:12px 14px;font-size:13px;color:var(--accent);line-height:1.55;
-}
-
-/* ── MODAL ── */
-.overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(13,13,12,.4);
-  z-index:100;align-items:center;justify-content:center;padding:16px;
-  backdrop-filter:blur(2px);
-}
-.overlay.on{display:flex}
-.modal{
-  background:var(--surface);border-radius:var(--r);
-  max-width:480px;width:100%;
-  border:1px solid var(--border);
-  overflow:hidden;
-}
-.modal-top{
-  padding:18px 22px;display:flex;
-  align-items:center;justify-content:space-between;
-  border-bottom:1px solid var(--border);
-}
-.modal-top h3{font-size:15px;font-weight:600;letter-spacing:-.01em}
-.modal-x{background:none;border:none;color:var(--text2);cursor:pointer;font-size:18px;line-height:1;padding:2px}
-.modal-x:hover{color:var(--text)}
-.modal-bd{padding:20px 22px}
-.dl{display:flex;flex-direction:column;gap:10px}
-.dr{display:flex;gap:10px;font-size:13px}
-.dk{color:var(--text3);width:90px;flex-shrink:0}
-.dv{color:var(--text);font-weight:500}
-.modal-note{
-  margin-top:14px;padding-top:14px;border-top:1px solid var(--border);
-}
-.modal-note-txt{font-size:13px;color:var(--text2);line-height:1.55}
-.modal-foot{
-  padding:14px 22px;border-top:1px solid var(--border);
-  display:flex;gap:8px;justify-content:flex-end;
-}
-.btn-ghost{
-  height:36px;padding:0 14px;
-  border:1px solid var(--border2);border-radius:var(--r-sm);
-  background:var(--surface);color:var(--text2);
-  font:500 13px/1 'Geist',sans-serif;cursor:pointer;
-}
-.btn-ghost:hover{color:var(--text);border-color:var(--text2)}
-.btn-solid{
-  height:36px;padding:0 14px;
-  background:var(--accent);color:white;border:none;
-  border-radius:var(--r-sm);font:500 13px/1 'Geist',sans-serif;cursor:pointer;
-}
-.btn-solid:hover{opacity:.85}
-
-/* ── FOOTER ── */
-footer{
-  margin-top:48px;padding:18px 20px;
-  border-top:1px solid var(--border);
-  font-size:11px;color:var(--text3);text-align:center;
-  background:var(--surface);
-}
-
-/* ── RESPONSIVE ── */
-@media(max-width:720px){
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .row2{grid-template-columns:1fr}
-  .row2-field{grid-template-columns:1fr}
-  .form-inner{padding:18px 20px}
-  .form-top{padding:18px 20px 16px}
-}
+/* ---------- brief ---------- */
+.brief{background:var(--white);border:1px solid var(--line);border-radius:var(--r);padding:28px;max-width:760px}
+.brief .bh{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--navy);padding-bottom:10px;margin-bottom:18px;flex-wrap:wrap;gap:6px}
+.brief .bh b{font-family:'Barlow Condensed';font-weight:700;font-size:24px;color:var(--navy);text-transform:uppercase}
+.brief .bh span{font-size:13px;color:var(--muted)}
+.brief h3{font-family:'Barlow Condensed';font-weight:600;font-size:18px;color:var(--blue);margin:18px 0 8px}
+.brief ul{list-style:none}
+.brief li{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px;display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.brief li:last-child{border-bottom:none}
+.brief .empty{color:var(--muted);font-style:italic;font-size:14px}
+.brief .bnum{display:flex;gap:24px;flex-wrap:wrap;margin-top:6px}
+.brief .bnum div b{font-family:'Barlow Condensed';font-size:28px;font-weight:700;color:var(--navy)}
+.brief .bnum div span{display:block;font-size:12px;color:var(--muted)}
+.brief footer{margin-top:22px;font-size:12px;color:var(--muted);font-style:italic;border-top:1px solid var(--line);padding-top:10px}
+@media print{header,nav,.demo-strip,.no-print{display:none!important}body{background:#fff}}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
-<header class="topbar">
-  <div class="logo">
-    <div class="logo-mark">
-      <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-    </div>
-    <div>
-      <div class="logo-text">Città Segnala</div>
-      <div class="logo-city">San Giovanni Rotondo</div>
-    </div>
+<div class="demo-strip">Modello dimostrativo — i dati sono di esempio e si azzerano ricaricando la pagina</div>
+<header>
+  <div class="topbar">
+    <div class="logo">Il Comune che risponde<small>San Giovanni Rotondo — sistema di ascolto e gestione segnalazioni</small></div>
+    <nav>
+      <button class="active" data-view="cittadino" onclick="switchView('cittadino',this)">Cittadino</button>
+      <button data-view="comune" onclick="switchView('comune',this)">Comune</button>
+      <button data-view="brief" onclick="switchView('brief',this)">Brief del lunedì</button>
+    </nav>
   </div>
-  <div class="topbar-spacer"></div>
-  <button class="topbar-btn" onclick="show('form')">
-    <svg viewBox="0 0 24 24"><path d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z"/></svg>
-    Segnala un problema
-  </button>
 </header>
 
-<!-- NAV -->
-<nav class="nav">
-  <button class="nav-item on" onclick="show('dash')">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-    Panoramica
-  </button>
-  <button class="nav-item" onclick="show('lista')">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h2V3H3v2zm0 4h2V7H3v2zm0 4h2v-2H3v2zm4-8h14V3H7v2zm0 4h14V7H7v2zm0 4h14v-2H7v2zm-4 4h2v-2H3v2zm4 0h14v-2H7v2zm-4 4h2v-2H3v2zm4 0h14v-2H7v2z"/></svg>
-    Segnalazioni
-    <span class="nav-count">12</span>
-  </button>
-  <button class="nav-item" onclick="show('form')">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-    Invia segnalazione
-  </button>
-  <button class="nav-item" onclick="show('stato')">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-    Verifica stato
-  </button>
-</nav>
+<main>
 
-<!-- ══ DASH ══ -->
-<main class="page on" id="page-dash">
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-val">312</div>
-      <div class="stat-label">Segnalazioni totali</div>
-      <div class="stat-sub" style="color:var(--text2)">dall'avvio della piattaforma</div>
+<!-- ============ VISTA CITTADINO ============ -->
+<section id="view-cittadino" class="view active">
+  <h1>Segnala al Comune</h1>
+  <p class="sub">Ogni segnalazione riceve un numero di pratica e una risposta entro 48 ore. Sempre.</p>
+
+  <div class="card">
+    <div class="grid2">
+      <div class="field">
+        <label for="f-cat">Categoria</label>
+        <select id="f-cat">
+          <option>Strade e marciapiedi</option>
+          <option>Illuminazione pubblica</option>
+          <option>Rifiuti e pulizia</option>
+          <option>Verde e parchi</option>
+          <option>Servizi sociali</option>
+          <option>Uffici e pratiche</option>
+          <option>Altro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-via">Via o luogo</label>
+        <input id="f-via" type="text" placeholder="Es. Via Cavour, altezza civico 12">
+      </div>
     </div>
-    <div class="stat">
-      <div class="stat-val" style="color:var(--green)">194</div>
-      <div class="stat-label">Risolte</div>
-      <div class="stat-sub" style="color:var(--green)">62% del totale</div>
+    <div class="field">
+      <label for="f-desc">Descrizione</label>
+      <textarea id="f-desc" placeholder="Descrivi il problema in modo semplice. Una foto aiuta gli uffici a intervenire prima."></textarea>
     </div>
-    <div class="stat">
-      <div class="stat-val" style="color:var(--amber)">87</div>
-      <div class="stat-label">In lavorazione</div>
-      <div class="stat-sub" style="color:var(--amber)">assegnate agli uffici</div>
+    <div class="grid2">
+      <div class="field">
+        <label for="f-nome">Nome <span class="opt">(facoltativo)</span></label>
+        <input id="f-nome" type="text" placeholder="Il tuo nome">
+      </div>
+      <div class="field">
+        <label for="f-contatto">Telefono o email</label>
+        <input id="f-contatto" type="text" placeholder="Per ricevere gli aggiornamenti sulla pratica">
+        <p class="hint">Il contatto serve solo per rispondere alla segnalazione. Non viene mai pubblicato.</p>
+      </div>
     </div>
-    <div class="stat">
-      <div class="stat-val" style="color:var(--accent)">4.2</div>
-      <div class="stat-label">Giorni risposta media</div>
-      <div class="stat-sub" style="color:var(--accent)">↓ 1.3 rispetto al mese scorso</div>
+    <button class="btn" onclick="inviaSegnalazione()">Invia la segnalazione</button>
+
+    <div class="ticket" id="ticket">
+      <div style="font-size:13px;color:var(--blue);font-weight:600;letter-spacing:.5px">PRATICA REGISTRATA</div>
+      <div class="tid" id="ticket-id">SGR-2026-0000</div>
+      <p id="ticket-msg"></p>
     </div>
   </div>
 
-  <div class="row2">
-    <div class="panel">
-      <div class="panel-head">
-        <span class="panel-title">Segnalazioni per categoria</span>
-      </div>
-      <div class="panel-body">
-        <div class="bar-row"><div class="bar-cat">Strade</div><div class="bar-track"><div class="bar-fill" style="width:79%;background:#7C3AED"></div></div><div class="bar-n">98</div></div>
-        <div class="bar-row"><div class="bar-cat">Illuminazione</div><div class="bar-track"><div class="bar-fill" style="width:55%;background:#D97706"></div></div><div class="bar-n">68</div></div>
-        <div class="bar-row"><div class="bar-cat">Verde pubblico</div><div class="bar-track"><div class="bar-fill" style="width:42%;background:#1A6644"></div></div><div class="bar-n">52</div></div>
-        <div class="bar-row"><div class="bar-cat">Rifiuti</div><div class="bar-track"><div class="bar-fill" style="width:36%;background:#8B1F1F"></div></div><div class="bar-n">44</div></div>
-        <div class="bar-row"><div class="bar-cat">Servizi sociali</div><div class="bar-track"><div class="bar-fill" style="width:23%;background:#7E2F8E"></div></div><div class="bar-n">28</div></div>
-        <div class="bar-row"><div class="bar-cat">Sicurezza</div><div class="bar-track"><div class="bar-fill" style="width:18%;background:#1A4D8A"></div></div><div class="bar-n">22</div></div>
-      </div>
+  <h2>Verifica lo stato di una pratica</h2>
+  <div class="card">
+    <div class="lookup">
+      <input id="lk-id" type="text" placeholder="Inserisci il numero di pratica, es. SGR-2026-0103" aria-label="Numero di pratica">
+      <button class="btn sec" onclick="verificaPratica()">Verifica</button>
     </div>
-    <div class="panel">
-      <div class="panel-head"><span class="panel-title">Stato</span></div>
-      <div class="panel-body">
-        <div class="donut-center">
-          <svg width="120" height="120" viewBox="0 0 120 120">
-            <circle cx="60" cy="60" r="46" fill="none" stroke="#E8E7E3" stroke-width="14"/>
-            <circle cx="60" cy="60" r="46" fill="none" stroke="#1A6644" stroke-width="14"
-              stroke-dasharray="179 110" stroke-dashoffset="35" stroke-linecap="butt"/>
-            <circle cx="60" cy="60" r="46" fill="none" stroke="#D97706" stroke-width="14"
-              stroke-dasharray="80 209" stroke-dashoffset="-144" stroke-linecap="butt"/>
-          </svg>
-          <div class="donut-pct">62%</div>
-          <div class="donut-sub">risolte</div>
-        </div>
-        <div class="legend">
-          <div class="legend-row"><div class="dot" style="background:#1A6644"></div>Risolte<div class="legend-n">194</div></div>
-          <div class="legend-row"><div class="dot" style="background:#D97706"></div>In lavorazione<div class="legend-n">87</div></div>
-          <div class="legend-row"><div class="dot" style="background:#E8E7E3"></div>In attesa<div class="legend-n">31</div></div>
-        </div>
-      </div>
-    </div>
+    <div class="timeline" id="lk-result"></div>
+  </div>
+</section>
+
+<!-- ============ VISTA COMUNE ============ -->
+<section id="view-comune" class="view">
+  <h1>Registro unico delle segnalazioni</h1>
+  <p class="sub">Ogni pratica ha un responsabile, uno stato e una scadenza. Niente cade nel vuoto.</p>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="filters no-print">
+    <select id="fl-stato" onchange="renderTable()" aria-label="Filtra per stato">
+      <option value="">Tutti gli stati</option>
+      <option>Ricevuta</option><option>Assegnata</option><option>In lavorazione</option>
+      <option>Risolta</option><option>Altro ente</option><option>Non realizzabile</option>
+    </select>
+    <select id="fl-cat" onchange="renderTable()" aria-label="Filtra per categoria">
+      <option value="">Tutte le categorie</option>
+      <option>Strade e marciapiedi</option><option>Illuminazione pubblica</option>
+      <option>Rifiuti e pulizia</option><option>Verde e parchi</option>
+      <option>Servizi sociali</option><option>Uffici e pratiche</option><option>Altro</option>
+    </select>
+    <select id="fl-ferme" onchange="renderTable()" aria-label="Filtra pratiche ferme">
+      <option value="">Tutte</option>
+      <option value="ferme">Solo ferme da più di 15 giorni</option>
+      <option value="aperte">Solo aperte</option>
+    </select>
   </div>
 
-  <div class="panel">
-    <div class="panel-head">
-      <span class="panel-title">Ultime segnalazioni</span>
-      <button class="panel-link" onclick="show('lista')">Vedi tutte →</button>
-    </div>
-    <div style="padding:0 18px">
-      <div class="recent-item">
-        <span class="chip chip-strada">Strade</span>
-        <div class="ri-body"><div class="ri-title">Buca via Padre Pio, altezza civico 34</div><div class="ri-meta">Mario R. · 8 giu 2026</div></div>
-        <span class="chip st-wip">In lavorazione</span>
-      </div>
-      <div class="recent-item">
-        <span class="chip chip-luce">Illuminazione</span>
-        <div class="ri-body"><div class="ri-title">Lampione spento da 3 settimane, via Garibaldi</div><div class="ri-meta">Anonimo · 8 giu 2026</div></div>
-        <span class="chip st-new">Ricevuta</span>
-      </div>
-      <div class="recent-item">
-        <span class="chip chip-verde">Verde</span>
-        <div class="ri-body"><div class="ri-title">Rami pericolanti sentiero Parco del Papa</div><div class="ri-meta">Lucia M. · 7 giu 2026</div></div>
-        <span class="chip st-done">Risolta</span>
-      </div>
-      <div class="recent-item">
-        <span class="chip chip-rif">Rifiuti</span>
-        <div class="ri-body"><div class="ri-title">Abbandono rifiuti ingombranti zona PIP</div><div class="ri-meta">Francesco D. · 6 giu 2026</div></div>
-        <span class="chip st-wip">In lavorazione</span>
-      </div>
-    </div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Pratica</th><th>Categoria</th><th>Luogo</th><th>Ufficio</th><th>Stato</th><th>Giorni</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
   </div>
+</section>
+
+<!-- ============ VISTA BRIEF ============ -->
+<section id="view-brief" class="view">
+  <h1>Brief del lunedì</h1>
+  <p class="sub">Una pagina, cinque minuti di lettura: tutto ciò che il Sindaco deve sapere questa settimana. Generato automaticamente dal registro.</p>
+  <div class="brief" id="brief"></div>
+  <p class="hint no-print" style="margin-top:10px">Il brief si aggiorna in tempo reale con i dati del registro. Da qui si può stampare o esportare in PDF.</p>
+  <button class="btn sec sm no-print" style="margin-top:8px" onclick="window.print()">Stampa il brief</button>
+</section>
+
 </main>
 
-<!-- ══ LISTA ══ -->
-<main class="page" id="page-lista">
-  <div class="filters">
-    <button class="filter on" onclick="filt(this,'all')">Tutte</button>
-    <button class="filter" onclick="filt(this,'strada')">🛣️ Strade</button>
-    <button class="filter" onclick="filt(this,'luce')">💡 Illuminazione</button>
-    <button class="filter" onclick="filt(this,'verde')">🌿 Verde</button>
-    <button class="filter" onclick="filt(this,'rif')">🗑️ Rifiuti</button>
-    <button class="filter" onclick="filt(this,'soc')">🤝 Sociale</button>
-    <button class="filter" onclick="filt(this,'done')">✓ Risolte</button>
-    <button class="filter" onclick="filt(this,'wip')">⟳ In lavorazione</button>
+<!-- ============ DRAWER DETTAGLIO ============ -->
+<div class="overlay" id="overlay" onclick="chiudiDettaglio()"></div>
+<aside class="drawer" id="drawer" aria-label="Dettaglio pratica">
+  <div class="drawer-head">
+    <button class="close" onclick="chiudiDettaglio()" aria-label="Chiudi">×</button>
+    <div class="tid" id="d-id"></div>
+    <div id="d-badge" style="margin-top:4px"></div>
   </div>
-  <div class="item-list" id="ilist">
-    <div class="item" data-c="strada" data-s="wip" onclick="modal('SGR-2026-0098','Strade','chip-strada','Buca profonda via Padre Pio, civico 34. Rischio caduta soprattutto di notte.','Mario R.','Via Padre Pio','8 giu 2026','wip','Ufficio Lavori Pubblici','Intervento di riasfaltatura programmato per la settimana del 15 giugno.')">
-      <span class="chip chip-strada">Strade</span>
-      <div class="item-body"><div class="item-title">Buca profonda via Padre Pio, civico 34</div><div class="item-meta">Mario R. · Via Padre Pio · 8 giu 2026</div></div>
-      <div class="item-right"><span class="chip st-wip">In lavorazione</span><span class="item-code">SGR-2026-0098</span></div>
-    </div>
-    <div class="item" data-c="luce" data-s="new" onclick="modal('SGR-2026-0097','Illuminazione','chip-luce','Lampione spento da circa 3 settimane. La zona è completamente buia di notte.','Anonimo','Via Garibaldi','8 giu 2026','new','Ufficio Ambiente','Segnalazione ricevuta, in fase di assegnazione.')">
-      <span class="chip chip-luce">Illuminazione</span>
-      <div class="item-body"><div class="item-title">Lampione spento da 3 settimane, zona buia</div><div class="item-meta">Anonimo · Via Garibaldi · 8 giu 2026</div></div>
-      <div class="item-right"><span class="chip st-new">Ricevuta</span><span class="item-code">SGR-2026-0097</span></div>
-    </div>
-    <div class="item" data-c="verde" data-s="done" onclick="modal('SGR-2026-0092','Verde pubblico','chip-verde','Rami pericolanti sul sentiero principale. Rischio per i passanti nelle ore serali.','Lucia M.','Parco del Papa','7 giu 2026','done','Ufficio Verde Pubblico','Intervento eseguito il 9 giugno. Rami rimossi, area in sicurezza.')">
-      <span class="chip chip-verde">Verde</span>
-      <div class="item-body"><div class="item-title">Rami pericolanti sentiero Parco del Papa</div><div class="item-meta">Lucia M. · Parco del Papa · 7 giu 2026</div></div>
-      <div class="item-right"><span class="chip st-done">Risolta</span><span class="item-code">SGR-2026-0092</span></div>
-    </div>
-    <div class="item" data-c="rif" data-s="wip" onclick="modal('SGR-2026-0089','Rifiuti','chip-rif','Abbandono sistematico di rifiuti ingombranti: divani, elettrodomestici, materassi.','Francesco D.','Zona PIP','6 giu 2026','wip','Polizia Locale','Verifiche in corso. Avviato procedimento per identificazione responsabili.')">
-      <span class="chip chip-rif">Rifiuti</span>
-      <div class="item-body"><div class="item-title">Abbandono rifiuti ingombranti zona PIP</div><div class="item-meta">Francesco D. · Zona PIP · 6 giu 2026</div></div>
-      <div class="item-right"><span class="chip st-wip">In lavorazione</span><span class="item-code">SGR-2026-0089</span></div>
-    </div>
-    <div class="item" data-c="soc" data-s="done" onclick="modal('SGR-2026-0085','Servizi sociali','chip-soc','Signora anziana sola, senza rete familiare. Necessita assistenza e supporto quotidiano.','Anonimo','Centro storico','5 giu 2026','done','Servizi Sociali','Presa in carico. Prima visita di assistenza domiciliare effettuata il 7 giugno.')">
-      <span class="chip chip-soc">Sociale</span>
-      <div class="item-body"><div class="item-title">Anziana sola senza supporto, centro storico</div><div class="item-meta">Anonimo · Centro storico · 5 giu 2026</div></div>
-      <div class="item-right"><span class="chip st-done">Presa in carico</span><span class="item-code">SGR-2026-0085</span></div>
-    </div>
-    <div class="item" data-c="strada" data-s="done" onclick="modal('SGR-2026-0081','Strade','chip-strada','Marciapiede dissestato, non accessibile a carrozzine e persone con mobilità ridotta.','Anna P.','Via Europa','4 giu 2026','done','Ufficio Lavori Pubblici','Lavori completati il 7 giugno. Marciapiede ripristinato e accessibile.')">
-      <span class="chip chip-strada">Strade</span>
-      <div class="item-body"><div class="item-title">Marciapiede dissestato via Europa, non accessibile</div><div class="item-meta">Anna P. · Via Europa · 4 giu 2026</div></div>
-      <div class="item-right"><span class="chip st-done">Risolta</span><span class="item-code">SGR-2026-0081</span></div>
-    </div>
-  </div>
-</main>
+  <div class="drawer-body">
+    <dl class="kv">
+      <dt>Categoria</dt><dd id="d-cat"></dd>
+      <dt>Luogo</dt><dd id="d-via"></dd>
+      <dt>Ricevuta il</dt><dd id="d-data"></dd>
+      <dt>Contatto</dt><dd id="d-contatto"></dd>
+    </dl>
+    <h3>Descrizione</h3>
+    <p id="d-desc" style="font-size:14px"></p>
 
-<!-- ══ FORM ══ -->
-<main class="page" id="page-form">
-  <div class="form-shell">
-    <div class="form-card">
-      <div id="form-body">
-        <div class="form-top">
-          <h2>Segnala un problema</h2>
-          <p>Compila il form — la segnalazione viene assegnata all'ufficio giusto e potrai seguirne lo stato.</p>
-        </div>
-        <div class="form-inner">
-          <div class="field">
-            <div class="label">Di cosa si tratta?</div>
-            <div class="cat-grid">
-              <div class="cat-card" onclick="selCat(this)"><span class="cat-emoji">🛣️</span><span class="cat-name">Strade e marciapiedi</span></div>
-              <div class="cat-card" onclick="selCat(this)"><span class="cat-emoji">💡</span><span class="cat-name">Illuminazione</span></div>
-              <div class="cat-card" onclick="selCat(this)"><span class="cat-emoji">🌿</span><span class="cat-name">Verde pubblico</span></div>
-              <div class="cat-card" onclick="selCat(this)"><span class="cat-emoji">🗑️</span><span class="cat-name">Rifiuti e decoro</span></div>
-              <div class="cat-card" onclick="selCat(this)"><span class="cat-emoji">🤝</span><span class="cat-name">Servizi sociali</span></div>
-              <div class="cat-card" onclick="selCat(this)"><span class="cat-emoji">📋</span><span class="cat-name">Altro</span></div>
-            </div>
-          </div>
-          <div class="field">
-            <label class="label">Dove si trova il problema?</label>
-            <input type="text" placeholder="Via, piazza o zona della città…">
-            <div class="map-mock" style="margin-top:8px" onclick="this.innerHTML='<svg viewBox=\'0 0 24 24\' fill=\'#1A6644\' width=\'22\' height=\'22\'><path d=\'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z\'/></svg><span style=\'color:#1A6644;font-size:13px;font-weight:500\'>Posizione selezionata ✓</span>'">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              <span>Tocca per indicare il punto sulla mappa</span>
-            </div>
-          </div>
-          <div class="field">
-            <label class="label">Descrivi il problema</label>
-            <textarea placeholder="Cosa hai notato? Da quanto tempo? Qualsiasi dettaglio è utile."></textarea>
-          </div>
-          <div class="row2-field">
-            <div class="field" style="margin-bottom:0">
-              <label class="label">Foto <span class="label-opt">(opzionale)</span></label>
-              <div class="upload-mock" onclick="this.textContent='📎  1 foto allegata'">📷  Carica una foto</div>
-            </div>
-            <div class="field" style="margin-bottom:0">
-              <label class="label">Contatto <span class="label-opt">(opzionale)</span></label>
-              <input type="email" placeholder="Email per ricevere aggiornamenti">
-            </div>
-          </div>
-          <button class="submit-btn" onclick="submitForm()">Invia segnalazione →</button>
-          <div class="privacy">Puoi inviare anonimamente · Dati trattati ai sensi del GDPR</div>
-        </div>
-      </div>
-      <div class="success" id="success-box">
-        <div class="s-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
-        <div style="font-size:15px;font-weight:500;margin-bottom:4px">Segnalazione inviata</div>
-        <div class="s-code">SGR-2026-0099</div>
-        <div class="s-hint">Salva questo codice per seguire lo stato</div>
-        <div class="note-box">La tua segnalazione è stata ricevuta e sarà assegnata all'ufficio competente. Riceverai aggiornamenti al contatto che hai indicato.</div>
-        <button class="reset-btn" onclick="resetForm()">Invia un'altra segnalazione</button>
-      </div>
+    <h3>Gestione</h3>
+    <div class="field">
+      <label for="d-ufficio">Ufficio responsabile</label>
+      <select id="d-ufficio">
+        <option>Lavori pubblici</option><option>Polizia locale</option>
+        <option>Ambiente e verde</option><option>Servizi sociali</option>
+        <option>Anagrafe e uffici</option><option>Segreteria del Sindaco</option>
+      </select>
     </div>
-  </div>
-</main>
+    <div class="field">
+      <label for="d-stato">Stato della pratica</label>
+      <select id="d-stato" onchange="toggleNota()">
+        <option>Ricevuta</option><option>Assegnata</option><option>In lavorazione</option>
+        <option>Risolta</option><option>Altro ente</option><option>Non realizzabile</option>
+      </select>
+      <p class="hint">Gli esiti «Altro ente» e «Non realizzabile» richiedono sempre una motivazione: il cittadino tollera un no spiegato, non il silenzio.</p>
+    </div>
+    <div class="field note-req" id="nota-box">
+      <label for="d-nota">Motivazione per il cittadino <span style="color:var(--st-norealizz)">*</span></label>
+      <textarea id="d-nota" placeholder="Es. La strada è di competenza della Provincia di Foggia. Abbiamo inoltrato la segnalazione all'ufficio viabilità provinciale."></textarea>
+    </div>
+    <button class="btn sm" onclick="salvaPratica()">Aggiorna la pratica</button>
+    <p class="hint" id="d-feedback" style="margin-top:8px"></p>
 
-<!-- ══ STATO ══ -->
-<main class="page" id="page-stato">
-  <div class="stato-shell">
-    <div class="search-card">
-      <h2>Segui la tua segnalazione</h2>
-      <p>Inserisci il codice ricevuto dopo l'invio per vedere a che punto siamo.</p>
-      <div class="search-row">
-        <input type="text" id="code-in" placeholder="SGR-2026-0087">
-        <button class="search-go" onclick="showTracker()">Cerca</button>
-      </div>
-    </div>
-    <div class="tracker" id="tracker">
-      <div class="tracker-head">
-        <div class="tracker-top-row">
-          <span class="chip chip-strada">Strade</span>
-          <span class="tracker-id">SGR-2026-0087</span>
-          <span class="chip st-wip" style="margin-left:auto">In lavorazione</span>
-        </div>
-        <div class="tracker-desc">Buca profonda via Padre Pio, civico 34</div>
-        <div class="tracker-meta-txt">Ricevuta 8 giu 2026 · Ufficio Lavori Pubblici</div>
-      </div>
-      <div class="tracker-body">
-        <div class="steps" style="position:relative">
-          <div class="steps-bg"><div class="steps-bg-fill"></div></div>
-          <div class="step"><div class="step-dot done">✓</div><div class="step-lbl done">Ricevuta</div></div>
-          <div class="step"><div class="step-dot done">✓</div><div class="step-lbl done">Assegnata</div></div>
-          <div class="step"><div class="step-dot active">⚙</div><div class="step-lbl active">In lavorazione</div></div>
-          <div class="step"><div class="step-dot">4</div><div class="step-lbl">Risolta</div></div>
-        </div>
-        <div class="update-note">
-          <strong>Aggiornamento (9 giu):</strong> Intervento di riasfaltatura programmato per la settimana del 15 giugno. Il tratto sarà temporaneamente transennato durante i lavori.
-        </div>
-      </div>
-    </div>
+    <h3>Cronologia</h3>
+    <div id="d-timeline"></div>
   </div>
-</main>
-
-<!-- MODAL -->
-<div class="overlay" id="ov" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <div class="modal-top">
-      <h3 id="m-title">Dettaglio</h3>
-      <button class="modal-x" onclick="closeModal()">✕</button>
-    </div>
-    <div class="modal-bd">
-      <div class="dl">
-        <div class="dr"><span class="dk">Codice</span><span class="dv" id="m-id" style="font-family:monospace"></span></div>
-        <div class="dr"><span class="dk">Categoria</span><span class="dv" id="m-cat"></span></div>
-        <div class="dr"><span class="dk">Zona</span><span class="dv" id="m-zona"></span></div>
-        <div class="dr"><span class="dk">Segnalato da</span><span class="dv" id="m-chi"></span></div>
-        <div class="dr"><span class="dk">Data</span><span class="dv" id="m-data"></span></div>
-        <div class="dr"><span class="dk">Ufficio</span><span class="dv" id="m-uff"></span></div>
-      </div>
-      <div class="modal-note">
-        <div style="font-size:12px;color:var(--text3);margin-bottom:6px">Descrizione</div>
-        <div class="modal-note-txt" id="m-desc"></div>
-      </div>
-      <div class="modal-note" id="m-note-wrap">
-        <div style="font-size:12px;color:var(--text3);margin-bottom:6px">Aggiornamento ufficio</div>
-        <div class="modal-note-txt" id="m-note"></div>
-      </div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn-ghost" onclick="closeModal()">Chiudi</button>
-      <button class="btn-solid" onclick="closeModal();show('stato')">Traccia →</button>
-    </div>
-  </div>
-</div>
-
-<footer>
-  <strong style="color:var(--text2)">Città Segnala</strong> · Comune di San Giovanni Rotondo · Sindaco Floriana Natale · versione di prova
-</footer>
+</aside>
 
 <script>
-function show(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  document.getElementById('page-'+id).classList.add('on');
-  document.querySelectorAll('.nav-item').forEach((n,i)=>{
-    n.classList.toggle('on',['dash','lista','form','stato'][i]===id);
+/* =================== DATI =================== */
+const OGGI = new Date(2026, 5, 12); // 12 giugno 2026
+const fmt = d => d.toLocaleDateString('it-IT', {day:'numeric', month:'short'});
+const giorniDa = d => Math.floor((OGGI - d) / 86400000);
+const g = n => { const d = new Date(OGGI); d.setDate(d.getDate() - n); return d; };
+
+const STATI_CHIUSI = ['Risolta', 'Altro ente', 'Non realizzabile'];
+const BADGE = {'Ricevuta':'b-ricevuta','Assegnata':'b-assegnata','In lavorazione':'b-lavorazione','Risolta':'b-risolta','Altro ente':'b-altroente','Non realizzabile':'b-norealizz'};
+
+let counter = 112;
+const pratiche = [
+  p(101, 34, 'Strade e marciapiedi', 'Via Foggia, civico 45', 'Buca profonda sulla carreggiata, pericolosa per scooter e bici.', 'Lavori pubblici', 'Risolta', [['Ricevuta',34],['Assegnata',33],['In lavorazione',28],['Risolta',24,'Intervento di ripristino eseguito il 19 maggio.']], 'M. Russo · 348...'),
+  p(102, 29, 'Illuminazione pubblica', 'Piazza Europa', 'Tre lampioni spenti sul lato della farmacia, zona buia la sera.', 'Lavori pubblici', 'Risolta', [['Ricevuta',29],['Assegnata',28],['In lavorazione',25],['Risolta',21,'Sostituiti i corpi illuminanti.']], 'anonimo'),
+  p(103, 26, 'Strade e marciapiedi', 'SP 273, ingresso città', 'Asfalto dissestato all\u2019ingresso del paese venendo da San Marco.', 'Lavori pubblici', 'Altro ente', [['Ricevuta',26],['Assegnata',25],['Altro ente',22,'La strada è di competenza della Provincia di Foggia. Segnalazione inoltrata all\u2019ufficio viabilità provinciale, pratica prov. n. 2026/441.']], 'G. De Vita · 347...'),
+  p(104, 22, 'Verde e parchi', 'Parco del Papa', 'Giochi per bambini danneggiati nell\u2019area vicino al chiosco.', 'Ambiente e verde', 'In lavorazione', [['Ricevuta',22],['Assegnata',21],['In lavorazione',16,'Ordinati i pezzi di ricambio, montaggio previsto entro fine giugno.']], 'A. Palumbo · email'),
+  p(105, 21, 'Rifiuti e pulizia', 'Via Anna Frank', 'Cassonetti stradali sempre pieni nel fine settimana.', 'Ambiente e verde', 'In lavorazione', [['Ricevuta',21],['Assegnata',20],['In lavorazione',14,'Richiesto all\u2019azienda un passaggio aggiuntivo il sabato: in valutazione.']], 'anonimo'),
+  p(106, 19, 'Servizi sociali', 'Centro per minori, P.zza S. M. De Mattias', 'Chiedo informazioni sugli orari estivi delle attività per ragazzi.', 'Servizi sociali', 'Risolta', [['Ricevuta',19],['Assegnata',18],['Risolta',17,'Risposto al cittadino con il calendario estivo delle attività.']], 'L. Grifa · 340...'),
+  p(107, 18, 'Strade e marciapiedi', 'Via Cavour, civico 12', 'Marciapiede sconnesso, una signora anziana è inciampata.', 'Lavori pubblici', 'Assegnata', [['Ricevuta',18],['Assegnata',17]], 'F. Cusenza · 333...'),
+  p(108, 12, 'Illuminazione pubblica', 'Zona PIP, viale principale', 'Tratto completamente al buio da una settimana.', 'Lavori pubblici', 'In lavorazione', [['Ricevuta',12],['Assegnata',11],['In lavorazione',8,'Guasto alla linea: intervento programmato con la ditta.']], 'impresa locale · email'),
+  p(109, 9, 'Altro', 'Centro storico', 'Si chiede di installare una fontanella d\u2019acqua potabile in piazza.', 'Lavori pubblici', 'Non realizzabile', [['Ricevuta',9],['Assegnata',8],['Non realizzabile',3,'L\u2019allaccio idrico in quel punto richiede uno scavo non autorizzabile per vincolo sul centro storico. Valuteremo una posizione alternativa nel piano 2027.']], 'anonimo'),
+  p(110, 6, 'Rifiuti e pulizia', 'Via degli Aviatori', 'Abbandono di ingombranti vicino alle campane del vetro.', 'Polizia locale', 'Assegnata', [['Ricevuta',6],['Assegnata',5]], 'anonimo'),
+  p(111, 2, 'Verde e parchi', 'Parco San Camillo', 'Erba alta nell\u2019area cani, difficile da usare.', 'Ambiente e verde', 'Ricevuta', [['Ricevuta',2]], 'P. Rizza · 329...'),
+  p(112, 1, 'Uffici e pratiche', 'Ufficio anagrafe', 'Tempi lunghi per il rilascio della carta d\u2019identità.', 'Anagrafe e uffici', 'Ricevuta', [['Ricevuta',1]], 'M. Mangiacotti · email'),
+];
+
+function p(num, giorni, cat, via, desc, ufficio, stato, storia, contatto){
+  return {
+    id: 'SGR-2026-0' + num,
+    data: g(giorni), cat, via, desc, ufficio, stato, contatto,
+    ultimoAgg: g(storia[storia.length-1][1]),
+    storia: storia.map(s => ({stato:s[0], data:g(s[1]), nota:s[2]||''}))
+  };
+}
+
+/* =================== NAVIGAZIONE =================== */
+function switchView(v, btn){
+  document.querySelectorAll('.view').forEach(x => x.classList.remove('active'));
+  document.getElementById('view-' + v).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if(v === 'comune'){ renderStats(); renderTable(); }
+  if(v === 'brief'){ renderBrief(); }
+}
+
+/* =================== CITTADINO =================== */
+function inviaSegnalazione(){
+  const desc = document.getElementById('f-desc').value.trim();
+  const via = document.getElementById('f-via').value.trim();
+  if(!desc || !via){ alert('Per registrare la pratica servono almeno il luogo e una breve descrizione.'); return; }
+  counter++;
+  const nuova = {
+    id: 'SGR-2026-0' + counter,
+    data: new Date(OGGI), cat: document.getElementById('f-cat').value,
+    via, desc, ufficio: 'Segreteria del Sindaco', stato: 'Ricevuta',
+    contatto: document.getElementById('f-contatto').value.trim() || 'anonimo',
+    ultimoAgg: new Date(OGGI),
+    storia: [{stato:'Ricevuta', data:new Date(OGGI), nota:''}]
+  };
+  pratiche.push(nuova);
+  document.getElementById('ticket-id').textContent = nuova.id;
+  document.getElementById('ticket-msg').textContent =
+    'Grazie. La tua segnalazione è stata registrata e verrà assegnata all\u2019ufficio competente. Entro 48 ore riceverai una conferma di presa in carico' +
+    (nuova.contatto !== 'anonimo' ? ' al contatto indicato.' : '.') +
+    ' Conserva il numero di pratica per verificarne lo stato in qualsiasi momento.';
+  document.getElementById('ticket').style.display = 'block';
+  ['f-desc','f-via','f-nome','f-contatto'].forEach(i => document.getElementById(i).value = '');
+}
+
+function verificaPratica(){
+  const q = document.getElementById('lk-id').value.trim().toUpperCase();
+  const box = document.getElementById('lk-result');
+  const pr = pratiche.find(x => x.id === q);
+  box.style.display = 'block';
+  if(!pr){
+    box.innerHTML = '<p style="color:var(--muted);font-size:14px">Nessuna pratica trovata con questo numero. Controlla di averlo scritto per intero, es. SGR-2026-0103.</p>';
+    return;
+  }
+  box.innerHTML = '<p style="font-size:14px;margin-bottom:8px"><b>' + pr.id + '</b> — ' + pr.cat + ', ' + esc(pr.via) +
+    ' &nbsp;<span class="badge ' + BADGE[pr.stato] + '">' + pr.stato + '</span></p>' + timelineHTML(pr);
+}
+
+function timelineHTML(pr){
+  return pr.storia.map(s =>
+    '<div class="tl-item"><div class="tl-date">' + fmt(s.data) + '</div><div class="tl-body"><b>' + s.stato + '</b>' +
+    (s.nota ? '<div>' + esc(s.nota) + '</div>' : '') + '</div></div>'
+  ).join('');
+}
+
+/* =================== COMUNE =================== */
+function renderStats(){
+  const tot = pratiche.length;
+  const aperte = pratiche.filter(x => !STATI_CHIUSI.includes(x.stato)).length;
+  const risolte = pratiche.filter(x => x.stato === 'Risolta').length;
+  const ferme = pratiche.filter(x => !STATI_CHIUSI.includes(x.stato) && giorniDa(x.ultimoAgg) > 15).length;
+  const chiuse = pratiche.filter(x => STATI_CHIUSI.includes(x.stato));
+  const tempoMedio = chiuse.length ? Math.round(chiuse.reduce((a,x) => a + (giorniDa(x.data) - giorniDa(x.ultimoAgg)), 0) / chiuse.length) : 0;
+  document.getElementById('stats').innerHTML =
+    stat(tot,'Segnalazioni totali') + stat(aperte,'Aperte') + stat(risolte,'Risolte') +
+    '<div class="stat warn"><div class="n">' + ferme + '</div><div class="l">Ferme da oltre 15 giorni</div></div>' +
+    stat(tempoMedio + ' gg','Tempo medio di chiusura');
+}
+const stat = (n,l) => '<div class="stat"><div class="n">' + n + '</div><div class="l">' + l + '</div></div>';
+
+function renderTable(){
+  const fs = document.getElementById('fl-stato').value;
+  const fc = document.getElementById('fl-cat').value;
+  const ff = document.getElementById('fl-ferme').value;
+  const rows = pratiche.slice().reverse().filter(x => {
+    if(fs && x.stato !== fs) return false;
+    if(fc && x.cat !== fc) return false;
+    if(ff === 'aperte' && STATI_CHIUSI.includes(x.stato)) return false;
+    if(ff === 'ferme' && (STATI_CHIUSI.includes(x.stato) || giorniDa(x.ultimoAgg) <= 15)) return false;
+    return true;
   });
-  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('tbody').innerHTML = rows.length ? rows.map(x => {
+    const ferma = !STATI_CHIUSI.includes(x.stato) && giorniDa(x.ultimoAgg) > 15;
+    return '<tr onclick="apriDettaglio(\'' + x.id + '\')"><td><b>' + x.id + '</b><br><span style="color:var(--muted);font-size:12.5px">' + fmt(x.data) + '</span></td>' +
+      '<td>' + x.cat + '</td><td>' + esc(x.via) + '</td><td>' + x.ufficio + '</td>' +
+      '<td><span class="badge ' + BADGE[x.stato] + '">' + x.stato + '</span></td>' +
+      '<td class="' + (ferma ? 'giorni-warn' : '') + '">' + giorniDa(x.data) + (ferma ? ' ⚠' : '') + '</td></tr>';
+  }).join('') : '<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:24px">Nessuna pratica corrisponde ai filtri selezionati.</td></tr>';
 }
 
-function filt(el,cat){
-  document.querySelectorAll('.filter').forEach(f=>f.classList.remove('on'));
-  el.classList.add('on');
-  document.querySelectorAll('.item').forEach(item=>{
-    if(cat==='all'){item.style.display='';return}
-    const c=item.dataset.c,s=item.dataset.s;
-    if(cat==='done') item.style.display=s==='done'?'':'none';
-    else if(cat==='wip') item.style.display=s==='wip'?'':'none';
-    else item.style.display=c===cat?'':'none';
-  });
+/* =================== DETTAGLIO =================== */
+let praticaAperta = null;
+function apriDettaglio(id){
+  praticaAperta = pratiche.find(x => x.id === id);
+  const pr = praticaAperta;
+  document.getElementById('d-id').textContent = pr.id;
+  document.getElementById('d-badge').innerHTML = '<span class="badge ' + BADGE[pr.stato] + '">' + pr.stato + '</span>';
+  document.getElementById('d-cat').textContent = pr.cat;
+  document.getElementById('d-via').textContent = pr.via;
+  document.getElementById('d-data').textContent = fmt(pr.data) + ' (' + giorniDa(pr.data) + ' giorni fa)';
+  document.getElementById('d-contatto').textContent = pr.contatto;
+  document.getElementById('d-desc').textContent = pr.desc;
+  document.getElementById('d-ufficio').value = pr.ufficio;
+  document.getElementById('d-stato').value = pr.stato;
+  document.getElementById('d-nota').value = '';
+  document.getElementById('d-feedback').textContent = '';
+  toggleNota();
+  document.getElementById('d-timeline').innerHTML = timelineHTML(pr);
+  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('drawer').classList.add('open');
+}
+function chiudiDettaglio(){
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('drawer').classList.remove('open');
+}
+function toggleNota(){
+  const s = document.getElementById('d-stato').value;
+  document.getElementById('nota-box').style.display = ['Altro ente','Non realizzabile','Risolta'].includes(s) ? 'block' : 'none';
+}
+function salvaPratica(){
+  const pr = praticaAperta; if(!pr) return;
+  const nuovoStato = document.getElementById('d-stato').value;
+  const nota = document.getElementById('d-nota').value.trim();
+  if(['Altro ente','Non realizzabile'].includes(nuovoStato) && !nota){
+    document.getElementById('d-feedback').textContent = 'Questi esiti richiedono una motivazione da comunicare al cittadino.';
+    document.getElementById('d-feedback').style.color = 'var(--st-norealizz)';
+    return;
+  }
+  pr.ufficio = document.getElementById('d-ufficio').value;
+  if(nuovoStato !== pr.stato || nota){
+    pr.stato = nuovoStato;
+    pr.ultimoAgg = new Date(OGGI);
+    pr.storia.push({stato:nuovoStato, data:new Date(OGGI), nota});
+  }
+  document.getElementById('d-feedback').textContent = 'Pratica aggiornata. Il cittadino riceve automaticamente la notifica del nuovo stato.';
+  document.getElementById('d-feedback').style.color = 'var(--st-risolta)';
+  document.getElementById('d-badge').innerHTML = '<span class="badge ' + BADGE[pr.stato] + '">' + pr.stato + '</span>';
+  document.getElementById('d-timeline').innerHTML = timelineHTML(pr);
+  renderStats(); renderTable();
 }
 
-function selCat(el){
-  document.querySelectorAll('.cat-card').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');
+/* =================== BRIEF =================== */
+function renderBrief(){
+  const aperte = pratiche.filter(x => !STATI_CHIUSI.includes(x.stato));
+  const ferme = aperte.filter(x => giorniDa(x.ultimoAgg) > 15);
+  const nuove = pratiche.filter(x => giorniDa(x.data) <= 7);
+  const risolteSett = pratiche.filter(x => x.stato === 'Risolta' && giorniDa(x.ultimoAgg) <= 7);
+  const daDecidere = aperte.filter(x => x.stato === 'Ricevuta' && giorniDa(x.data) >= 2);
+  const perCat = {};
+  pratiche.forEach(x => perCat[x.cat] = (perCat[x.cat] || 0) + 1);
+  const topCat = Object.entries(perCat).sort((a,b) => b[1] - a[1]).slice(0,3);
+
+  const li = x => '<li><span><b>' + x.id + '</b> — ' + x.cat + ', ' + esc(x.via) + '</span><span style="color:var(--muted)">' +
+    (STATI_CHIUSI.includes(x.stato) ? x.stato : 'ferma da ' + giorniDa(x.ultimoAgg) + ' gg · ' + x.ufficio) + '</span></li>';
+
+  document.getElementById('brief').innerHTML =
+    '<div class="bh"><b>Brief settimanale per il Sindaco</b><span>Lunedì ' + OGGI.toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'}) + ' · lettura: 5 minuti</span></div>' +
+
+    '<h3>⚠ Richiede attenzione — pratiche ferme da oltre 15 giorni</h3>' +
+    (ferme.length ? '<ul>' + ferme.map(li).join('') + '</ul>' : '<p class="empty">Nessuna pratica ferma. Il sistema è in regola.</p>') +
+
+    '<h3>In attesa di assegnazione da più di 48 ore</h3>' +
+    (daDecidere.length ? '<ul>' + daDecidere.map(li).join('') + '</ul>' : '<p class="empty">Tutte le nuove segnalazioni sono state assegnate nei tempi.</p>') +
+
+    '<h3>I numeri della settimana</h3>' +
+    '<div class="bnum"><div><b>' + nuove.length + '</b><span>nuove segnalazioni</span></div>' +
+    '<div><b>' + risolteSett.length + '</b><span>risolte negli ultimi 7 giorni</span></div>' +
+    '<div><b>' + aperte.length + '</b><span>aperte in totale</span></div></div>' +
+
+    '<h3>Le categorie più segnalate</h3><ul>' +
+    topCat.map(c => '<li><span>' + c[0] + '</span><span style="color:var(--muted)">' + c[1] + ' pratiche</span></li>').join('') + '</ul>' +
+
+    '<h3>Materiale pronto per la comunicazione</h3><ul>' +
+    (risolteSett.length ? risolteSett.map(x => '<li><span>«Segnalato, risolto»: ' + x.cat.toLowerCase() + ', ' + esc(x.via) + '</span><span style="color:var(--muted)">foto prima/dopo da raccogliere</span></li>').join('') :
+      '<li class="empty">Nessuna risoluzione recente da raccontare questa settimana.</li>') + '</ul>' +
+
+    '<footer>Generato automaticamente dal registro unico · Il Comune che risponde · Sistema di ascolto del Comune di San Giovanni Rotondo</footer>';
 }
 
-function submitForm(){
-  document.getElementById('form-body').style.display='none';
-  document.getElementById('success-box').classList.add('on');
-}
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-function resetForm(){
-  document.getElementById('form-body').style.display='block';
-  document.getElementById('success-box').classList.remove('on');
-}
-
-function showTracker(){
-  document.getElementById('tracker').classList.add('on');
-}
-
-function modal(id,cat,chipClass,desc,chi,zona,data,status,uff,note){
-  document.getElementById('m-title').textContent=id;
-  document.getElementById('m-id').textContent=id;
-  document.getElementById('m-cat').textContent=cat;
-  document.getElementById('m-desc').textContent=desc;
-  document.getElementById('m-chi').textContent=chi;
-  document.getElementById('m-zona').textContent=zona;
-  document.getElementById('m-data').textContent=data;
-  document.getElementById('m-uff').textContent=uff;
-  document.getElementById('m-note').textContent=note;
-  document.getElementById('ov').classList.add('on');
-}
-
-function closeModal(){
-  document.getElementById('ov').classList.remove('on');
-}
+renderStats(); renderTable(); renderBrief();
 </script>
 </body>
 </html>
